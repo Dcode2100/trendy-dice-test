@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import { Col,Row } from "antd";
 import React, { useState, useEffect } from "react";
-import Cards from "../card/Cards";    
+import Cards from "../Card/Cards";    
 
 const Cardlist = () => {
   // eslint-disable-next-line
@@ -19,11 +19,7 @@ const Cardlist = () => {
         {users.map((user) => (
           <Col
             className=" ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-6"
-            xs={24}
-            sm={24}
-            md={8}
-            lg={8}
-            xl={6}
+            xs={24} sm={24} md={8} lg={8} xl={6}
             key={user.id}
           >
             <Cards user={user} />
