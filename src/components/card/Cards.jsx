@@ -29,14 +29,12 @@ const Cards = (user) => {
               onClick={() => setLiked((prevstate) => !prevstate)}
             />
           ),
-          <EditOutlined key="edit" />,
+          <EditOutlined key="edit"/>,
           <DeleteFilled />,
         ]}
       >
         <div className={""}>
-          <h3 className="flex font-medium">
-            {user.user.name}
-          </h3>
+          <h3 className="flex font-medium">{user.user.name}</h3>
           <div className="flex flex-row justify-start items-center">
             <MailOutlined />
             <p className="ml-3 my-0 mr-0">{user.user.email}</p>

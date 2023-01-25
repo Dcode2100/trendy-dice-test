@@ -1,10 +1,10 @@
-import React, { useContext, memo } from "react";
+import React from "react";
 import { Form as FormAntd, Input } from "antd";
-
+import { fetchUsers } from "../../redux/userSlice";
 const Formlist = ((props) => {
   const { inputValues, setInputValues } = props;
   const { name, email, phone, website } = inputValues;
-  const { updateUser } = useContext(UsersDataContext);
+  
   const handleChange = (e) => {
     const value = e.currentTarget.value;
     const targetName = e.currentTarget.name;
@@ -29,7 +29,7 @@ const Formlist = ((props) => {
   };
 
   const onSubmit = (values) => {
-    updateUser(inputValues);
+    fetchUsers(inputValues);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -46,31 +46,31 @@ const Formlist = ((props) => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
+      <FormAntd.Item
         label="Name"
         rules={[{ required: true, message: "Please input your username!" }]}
       >
         <Input value={name} onChange={handleChange} name={"name"} />
-      </Form.Item>
+      </FormAntd.Item>
 
-      <Form.Item
+      <FormAntd.Item
         label="email"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input value={email} onChange={handleChange} name={"email"} />
-      </Form.Item>
-      <Form.Item
+      </FormAntd.Item>
+      <FormAntd.Item
         label="phone"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input value={phone} onChange={handleChange} name={"phone"} />
-      </Form.Item>
-      <Form.Item
+      </FormAntd.Item>
+      <FormAntd.Item
         label="website"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input value={website} onChange={handleChange} name={"website"} />
-      </Form.Item>
+      </FormAntd.Item>
     </FormAntd>
   );
 });
