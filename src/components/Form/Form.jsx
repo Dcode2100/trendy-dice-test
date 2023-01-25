@@ -1,85 +1,38 @@
-import React, { useContext, memo } from "react";
-import { Form as FormAntd, Input } from "antd";
-import { UsersDataContext } from "~/contexts/UsersData";
+import React, { useState, useContext } from "react";
+import { Modal } from "antd";
+import ModalForm from "@Components/ModalForm/ModalForm";
 
-const ModalForm = memo((props) => {
-  const { inputValues, setInputValues } = props;
-  const { name, email, phone, website } = inputValues;
+
+const Form = ((props) => {
+  const { user, isModalVisible = false, setIsModalVisible } = props;
+  const [inputValues, setInputValues] = useState({ ...user });
   const { updateUser } = useContext(UsersDataContext);
-  const handleChange = (e) => {
-    const value = e.currentTarget.value;
-    const targetName = e.currentTarget.name;
-
-    if (targetName === "name") {
-      return setInputValues((prevValues) => {
-        return { ...prevValues, name: value };
-      });
-    } else if (targetName === "email") {
-      return setInputValues((prevValues) => {
-        return { ...prevValues, email: value };
-      });
-    } else if (targetName === "phone") {
-      return setInputValues((prevValues) => {
-        return { ...prevValues, phone: value };
-      });
-    } else if (targetName === "website") {
-      return setInputValues((prevValues) => {
-        return { ...prevValues, website: value };
-      });
-    }
+  //eslint-disable-next-line
+  const showModal = () => {
+    setIsModalVisible(true);
   };
 
-  const onSubmit = (values) => {
+  const handleOk = () => {
     updateUser(inputValues);
+    setIsModalVisible(false);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
-    <FormAntd
-      name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      initialValues={{ remember: true }}
-      onFinish={onSubmit}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Name"
-        rules={[{ required: true, message: "Please input your username!" }]}
+    <>
+      <Modal
+        title="Basic Modal"
+        open={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-        <Input value={name} onChange={handleChange} name={"name"} />
-      </Form.Item>
-
-      <Form.Item
-        label="email"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input value={email} onChange={handleChange} name={"email"} />
-      </Form.Item>
-      <Form.Item
-        label="phone"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input value={phone} onChange={handleChange} name={"phone"} />
-      </Form.Item>
-      <Form.Item
-        label="website"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input value={website} onChange={handleChange} name={"website"} />
-      </Form.Item>
-
-      {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-           <Button type="primary" htmlType="submit">
-             Submit
-           </Button>
-         </Form.Item> */}
-    </FormAntd>
+        <ModalForm inputValues={inputValues} setInputValues={setInputValues} />
+      </Modal>
+    </>
   );
 });
 
-export default ModalForm;
+export default Form;

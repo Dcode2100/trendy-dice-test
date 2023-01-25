@@ -12,7 +12,6 @@ import {
 
 const Cards = (user) => {
   const [liked, setLiked] = useState(false);
-
   return (
     <div>
       <Card
