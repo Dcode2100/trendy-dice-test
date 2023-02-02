@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Card} from 'antd';
+import {Card, Form} from 'antd';
 import {
   EditOutlined,
   MailOutlined,
@@ -12,6 +12,8 @@ import {
 
 const Cards = (user) => {
   const [liked, setLiked] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   return (
     <div>
       <Card
@@ -29,7 +31,7 @@ const Cards = (user) => {
               onClick={() => setLiked((prevstate) => !prevstate)}
             />
           ),
-          <EditOutlined key="edit"/>,
+          <EditOutlined key="edit" onClick={() => setIsModalVisible(true)}/>,
           <DeleteFilled />,
         ]}
       >
@@ -48,7 +50,8 @@ const Cards = (user) => {
             <p className="ml-3 my-0 mr-0">{user.user.website}</p>
           </div>
         </div>
-      </Card>
+      </Card>  
+      <Form user={user} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}/>   
     </div>
   );
 }
