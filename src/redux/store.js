@@ -2,7 +2,7 @@ import { configureStore} from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
-import { userReducer,uiReducer} from "./userSlice";
+import { userReducer,uiReducer,deleteUser} from "./userSlice";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +16,7 @@ const persistConfig = {
 const rootReducer = {
   users: persistReducer(persistConfig, userReducer),
   ui: uiReducer,
+  deleteUser: deleteUser,
 };
 
 export const store = configureStore({

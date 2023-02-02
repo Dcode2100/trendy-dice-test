@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {Card, Form} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalVisible } from '../../redux/userSlice';
-import { deleteUser } from '../../redux/userSlice';
+import { deleteUser as deleteUserAction } from "../../redux/userSlice";
 import {
   EditOutlined,
   MailOutlined,
@@ -17,14 +17,14 @@ const Cards = (user) => {
   const dispatch = useDispatch();
   const visible = useSelector((state) => state.ui.isModalOpened);
   const [liked, setLiked] = useState(false);
-  
+
   const visibleButton = () => {
       dispatch(setIsModalVisible(!visible))
   }
 
-  const deleteUser = (id) => {
-    dispatch(deleteUser(id))
-  }
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUserAction(id));
+  };
 
   return (
     <div>
@@ -44,7 +44,7 @@ const Cards = (user) => {
             />
           ),
           <EditOutlined key="edit" onClick={() => visibleButton(true)} />,
-          <DeleteFilled onClick={ () => deleteUser(user.id)}/>,
+          <DeleteFilled onClick={() => handleDeleteUser(user.id)} />,
         ]}
       >
         <div className={""}>
@@ -63,7 +63,7 @@ const Cards = (user) => {
           </div>
         </div>
       </Card>
-      <Form user={user}/>
+      <Form user={user} />
     </div>
   );
 }
