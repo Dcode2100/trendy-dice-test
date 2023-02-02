@@ -1,5 +1,8 @@
 import React,{useState} from 'react'
 import {Card, Form} from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsModalVisible } from '../../redux/userSlice';
+import { deleteUser } from '../../redux/userSlice';
 import {
   EditOutlined,
   MailOutlined,
@@ -11,8 +14,17 @@ import {
 } from "@ant-design/icons";
 
 const Cards = (user) => {
+  const dispatch = useDispatch();
+  const visible = useSelector((state) => state.ui.isModalOpened);
   const [liked, setLiked] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  
+  const visibleButton = () => {
+      dispatch(setIsModalVisible(!visible))
+  }
+
+  const deleteUser = (id) => {
+    dispatch(deleteUser(id))
+  }
 
   return (
     <div>
@@ -31,8 +43,8 @@ const Cards = (user) => {
               onClick={() => setLiked((prevstate) => !prevstate)}
             />
           ),
-          <EditOutlined key="edit" onClick={() => setIsModalVisible(true)}/>,
-          <DeleteFilled />,
+          <EditOutlined key="edit" onClick={() => visibleButton(true)} />,
+          <DeleteFilled onClick={ () => deleteUser(user.id)}/>,
         ]}
       >
         <div className={""}>
@@ -50,8 +62,8 @@ const Cards = (user) => {
             <p className="ml-3 my-0 mr-0">{user.user.website}</p>
           </div>
         </div>
-      </Card>  
-      <Form user={user} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}/>   
+      </Card>
+      <Form user={user}/>
     </div>
   );
 }

@@ -1,34 +1,30 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { Modal} from "antd";
 import Formlist from "./Formlist";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers  } from "../../redux/userSlice";
+import { setIsModalVisible } from "../../redux/userSlice";
 
 const Form = (props) => {
   
-  const [inputValues, setInputValues] = useState({ ...user });
+  const [inputValues, setInputValues] = useState({ ...props.user });
   const dispatch = useDispatch();
-
-  const isModalVisible = useSelector((state) => state.ui.isModalOpened);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const visible = useSelector((state) => state.ui.isModalOpened);
   
   const handleOk = () => {
     dispatch(fetchUsers(inputValues));
-    setIsModalVisible(false);
+    dispatch(setIsModalVisible(false));
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    dispatch(setIsModalVisible(false));
   };
 
   return (
     <>
       <Modal
         title="Basic Modal"
-        open={isModalVisible}
+        open={visible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
